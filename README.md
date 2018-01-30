@@ -1,615 +1,210 @@
-# Opstel-challenge
+<p align="center">
+    <a href="https://github.com/yiisoft" target="_blank">
+        <img src="https://avatars0.githubusercontent.com/u/993323" height="100px">
+    </a>
+    <h1 align="center">Yii 2 Basic Project Template</h1>
+    <br>
+</p>
 
-Opstel Services Coding Challenge
-================================
-Prerequisites:
-===================
-•	Know a little PHP, mySQL or similar, HTML, JavaScript, and maybe some boot strap
+Yii 2 Basic Project Template is a skeleton [Yii 2](http://www.yiiframework.com/) application best for
+rapidly creating small projects.
 
-•	Know how GET, POST, PUT work in a web application
+The template contains the basic features including user login/logout and a contact page.
+It includes all commonly used configurations that would allow you to focus on adding new
+features to your application.
 
-•	Know how to connect to an API using PHP
+[![Latest Stable Version](https://poser.pugx.org/yiisoft/yii2-app-basic/v/stable.png)](https://packagist.org/packages/yiisoft/yii2-app-basic)
+[![Total Downloads](https://poser.pugx.org/yiisoft/yii2-app-basic/downloads.png)](https://packagist.org/packages/yiisoft/yii2-app-basic)
+[![Build Status](https://travis-ci.org/yiisoft/yii2-app-basic.svg?branch=master)](https://travis-ci.org/yiisoft/yii2-app-basic)
 
-Requirements:
-=============
-•	Windows, Linux, or Mac Box (Know your system!)
+DIRECTORY STRUCTURE
+-------------------
 
-•	Web server (IIS, Apache ect.)
+      assets/             contains assets definition
+      commands/           contains console commands (controllers)
+      config/             contains application configurations
+      controllers/        contains Web controller classes
+      mail/               contains view files for e-mails
+      models/             contains model classes
+      runtime/            contains files generated during runtime
+      tests/              contains various tests for the basic application
+      vendor/             contains dependent 3rd-party packages
+      views/              contains view files for the Web application
+      web/                contains the entry script and Web resources
 
-•	PHP installed on web server (preferably version 7.0)
 
-•	Have a local database like mySQL or Postgre
 
-Assumptions:
-==============
-You have your webserver up and serving PHP pages and a database running
+REQUIREMENTS
+------------
 
-For quick start I recommend XAMPP https://www.apachefriends.org/index.html
+The minimum requirement by this project template that your Web server supports PHP 5.4.0.
 
-Backend Challenge
-=================
 
-<b>Goal:</b> To create a restful API for a front-end application to connect to
+INSTALLATION
+------------
 
-<b>Step 1: </b>Install Composer
---------------------------------------
-Composer is a package installer not unlike NPM for JavaScript
+### Install via Composer
 
-Go to the following site and install composer on your system
+If you do not have [Composer](http://getcomposer.org/), you may install it by following the instructions
+at [getcomposer.org](http://getcomposer.org/doc/00-intro.md#installation-nix).
 
-https://getcomposer.org/
+You can then install this project template using the following command:
 
-<b>Step 2:</b> Make composer a global command for your systems shell
------------------------------------------------------------------------
+~~~
+php composer.phar create-project --prefer-dist --stability=dev yiisoft/yii2-app-basic basic
+~~~
 
-<b>Step 3:</b>  Install Yii2 Basic App using composer
-----------------------------------------------------------------
-For instructions view the link below
+Now you should be able to access the application through the following URL, assuming `basic` is the directory
+directly under the Web root.
 
- http://www.yiiframework.com/doc-2.0/guide-start-installation.html
+~~~
+http://localhost/basic/web/
+~~~
 
-<b>Step 4: </b>connect your application to your database
---------------------------------------------------------------
-<b>HINT:</b> Change your db config file
+### Install from an Archive File
 
-<b>Step 5:</b>  Set up the project to be an API backend
-----------------------------------------------------------
-You can follow the quick start guide here
+Extract the archive file downloaded from [yiiframework.com](http://www.yiiframework.com/download/) to
+a directory named `basic` that is directly under the Web root.
 
-http://www.yiiframework.com/doc-2.0/guide-start-installation.html
+Set cookie validation key in `config/web.php` file to some random secret string:
 
-good tutorial
-
-https://code.tutsplus.com/tutorials/programming-with-yii2-building-a-restful-api--cms-27513
-
-google -creating a restful web service with yii2
-
-<b>Step 6:</b> Create a user table in your database
--------------------------------------------------------
-check out how to do this with migrations here
-http://www.yiiframework.com/doc-2.0/guide-db-migrations.html
-
-<b>Hint:</b> create a migration similar to
 ```php
-        //Create User Table
-        $this->createTable('user', [
-            'id' => $this->primaryKey(11),
-            'first_name' => $this->string(50)->notNull(),
-            'last_name' => $this->string(50)->notNull(),
-            'employee_id' => $this->string(64)->notNull()->unique(),
-            'email' => $this->string(200)->notNull(),
-            'tenant' => $this->integer(3)->notNull(),
-            'username' => $this->string(255)->notNull()->unique(),
-            'auth_key' => $this->string(32)->notNull(),
-            'password_hash' => $this->string(255)->notNull(),
-            'password_reset_token' => $this->string(255)->notNull(),
-            'group' => $this->integer(3),
-            'state' => $this->string(2)->notNull(),
-            'use_external_auth' => $this->boolean()->defaultValue(false),
-            'external_id' => $this->string(255),
-            'created_at' => $this->integer(11)->notNull(),
-            'updated_at' => $this->integer(11),
-            'last_login' => $this->integer(11),
-        ] );
-        //Index User Table
-        $this->createIndex( 'idx_user_id', 'user', 'id');
-        $this->createIndex( 'idx_user_first_name', 'user', 'first_name');
-        $this->createIndex( 'idx_user_last_name', 'user', 'last_name');
-        $this->createIndex( 'idx_user_tenant', 'user', 'tenant');
-        $this->createIndex( 'idx_user_username', 'user', 'username');
-        $this->createIndex( 'idx_user_employee_id', 'user', 'employee_id');
-
+'request' => [
+    // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
+    'cookieValidationKey' => '<secret random string goes here>',
+],
 ```
 
-<b>Step 7:</b> Create a restful API CRUD for a user
-----------------------------------------------------
-Use GII to create the model for a user (follow instructions here)
-http://www.yiiframework.com/doc-2.0/guide-start-gii.html
+You can then access the application through the following URL:
 
-Follow instructions here to make the Controller
-http://www.yiiframework.com/doc-2.0/guide-rest-controllers.html
+~~~
+http://localhost/basic/web/
+~~~
 
-This is what it should look like
+
+CONFIGURATION
+-------------
+
+### Database
+
+Edit the file `config/db.php` with real data, for example:
+
 ```php
-<?php
-
-namespace app\modules\v1\controllers;
-
-use Yii;
-use yii\helpers\ArrayHelper;
-use yii\rest\ActiveController;
-use yii\web\BadRequestHttpException;
-use yii\data\ActiveDataProvider;
-use yii\filters\auth\CompositeAuth;
-use yii\filters\auth\HttpBasicAuth;
-use yii\filters\auth\HttpBearerAuth;
-use yii\filters\auth\QueryParamAuth;
-use app\models\User;
-
-class UserController extends ActiveController
-{
-    public $modelClass = 'app\models\User';
-
-    /**
-     * Checks the privilege of the current user.
-     *
-     * This method should be overridden to check whether the current user has the privilege
-     * to run the specified action against the specified data model.
-     * If the user does not have access, a [[ForbiddenHttpException]] should be thrown.
-     *
-     * @param string $action the ID of the action to be executed
-     * @param \yii\base\Model $model the model to be accessed. If `null`, it means no specific model is being accessed.
-     * @param array $params additional parameters
-     * @throws ForbiddenHttpException if the user does not have access
-     *The checkAccess() method will be called by the default actions of
-     *yii\rest\ActiveController. If you create new actions and also want to
-     *perform access check, you should call this method explicitly in the new actions.
-     */
-
-    public $appRoles=[
-        "agent"=>"agent",
-        "manager"=>"manager",
-        "admin"=>"admin",
-        "opstel"=>"opstel",
-    ];
-
-    public function checkAccess($action, $model = null, $params = [])
-    {
-        // check if the user can access $action and $model
-        // throw ForbiddenHttpException if access should be denied
-        if ($action === 'update' || $action === 'delete') {
-//            if ($model->author_id !== \Yii::$app->user->id)
-//                throw new \yii\web\ForbiddenHttpException(sprintf('You can only %s articles that you\'ve created.', $action));
-        }
-    }
-
-    public function behaviors()
-    {
-        return [
-            'basicAuth' => [
-                'class' => HttpBasicAuth::className(),
-                'except' => ['create', 'login', 'resetpassword'],
-            ],
-        ];
-    }
-
-
-    public function actions()
-    {
-        $actions = parent::actions();
-        $actions['index']['prepareDataProvider'] = [$this, 'indexDataProvider'];
-        return $actions;
-    }
-
-    public function indexDataProvider()
-    {
-        $params = \Yii::$app->request->queryParams;
-
-        $model = new  User();
-        // I'm using yii\base\Model::getAttributes() here
-        // In a real app I'd rather properly assign
-        // $model->scenario then use $model->safeAttributes() instead
-        $modelAttr = $model->attributes;
-
-        // this will hold filtering attrs pairs ( 'name' => 'value' )
-        $search = [];
-
-        if (!empty($params)) {
-            foreach ($params as $key => $value) {
-                // In case if you don't want to allow wired requests
-                // holding 'objects', 'arrays' or 'resources'
-                if (!is_scalar($key) or !is_scalar($value)) {
-                    throw new BadRequestHttpException('Bad Request');
-                }
-                // if the attr name is not a reserved Keyword like 'q' or 'sort' and
-                // is matching one of models attributes then we need it to filter results
-                if (!in_array(strtolower($key), $this->reservedParams)
-                    && ArrayHelper::keyExists($key, $modelAttr, false)) {
-                    $search[$key] = $value;
-                }
-            }
-        }
-        $query = User::find()->where($search);
-        // you may implement and return your 'ActiveDataProvider' instance here.
-        $provider = new ActiveDataProvider([
-            'query' => $query,
-            'pagination' => [
-                'pageSize' => 20,
-            ],
-        ]);
-
-        return $provider;
-
-    }
-
-    public function actionRoleslist()
-    {
-        return $this->appRoles;
-    }
-
-    public function actionGetrole(){
-        $request = Yii::$app->request;
-        $queryString=$request->queryParams;
-        if(isset($queryString["myuser"])) {
-            $userID = $queryString["myuser"];
-            $auth = \Yii::$app->authManager;
-            $roles = $auth->getRolesByUser($userID);
-            foreach ($roles as $key=>$value){
-                $myRole=$key;
-            }
-            if(isset($myRole)) return $myRole;
-            return "none";
-        }else{
-            throw new \yii\web\ForbiddenHttpException(sprintf('You must supply a user ID', 'getrole'));
-        }
-
-    }
-
-    public function actionAssignrole(){
-        // all roles in app
-        $roles=$this->appRoles;
-
-        //get user sent vars
-        $request = Yii::$app->request;
-        $queryString=$request->queryParams;
-
-//        //make sure correct vars sent for request
-        if(isset($queryString["myuser"]) && isset($queryString["myrole"])){
-            $userID=$queryString["myuser"];
-            $myRole=$queryString["myrole"];
-            $auth = \Yii::$app->authManager;
-
-            //revmove previous roles
-            $auth->revokeAll($userID);
-            $assignRole = $auth->getRole($myRole);
-            $auth->assign($assignRole, $userID);
-
-            return $myRole;
-
-        }else{
-            throw new \yii\web\ForbiddenHttpException(sprintf('You must supply a user ID and role', 'assignrole'));
-            //return json_encode($queryString);
-        }
-    }
-
-    public function actionLogin()
-    {
-        /**
-         * This is the model class for table "user".
-         *
-         * integer $id #
-         * string $first_name #
-         * string $last_name#
-         * string $employee_id
-         * string $email
-         * integer $tenant
-         * string $username
-         * string $auth_key
-         * string $password_hash
-         * string $password_reset_token
-         * integer $group
-         * string $state
-         * boolean $use_external_auth
-         * string $external_id
-         * integer $created_at
-         * integer $updated_at
-         * integer $last_login
-         */
-        $request = Yii::$app->request;
-        $params = $request->bodyParams;
-        if(!isset($params["username"])||!isset($params["password"])){
-            throw new \yii\web\ForbiddenHttpException(sprintf('incorrect credentials.', 'login'));
-        }else{
-            $model = User::findOne(["username" => $params["username"]]);
-        }
-
-        if (empty($model)) {
-            throw new \yii\web\ForbiddenHttpException(sprintf('incorrect credentials.', 'login'));
-        }
-
-        if ($model->validatePassword($params["password"])) {
-            $model->last_login = Yii::$app->formatter->asTimestamp(date_create());
-            $model->save(false);
-            $myResponse= [
-              'auth_key'=>$model->auth_key,
-              'id'=>$model->id,
-              'first_name'=>$model->first_name,
-              'last_name'=>$model->last_name,
-              'employee_id'=> $model->employee_id,
-              'email'=> $model-> email,
-              'tenant'=>$model->tenant,
-              'group'=>$model->group,
-            ];
-            //$myResponse= json_encode($myResponse);
-            return $myResponse;
-        } else {
-            throw new \yii\web\ForbiddenHttpException(sprintf('incorrect credentials.', 'login'));
-        }
-    }
-
-
-}
+return [
+    'class' => 'yii\db\Connection',
+    'dsn' => 'mysql:host=localhost;dbname=yii2basic',
+    'username' => 'root',
+    'password' => '1234',
+    'charset' => 'utf8',
+];
 ```
 
-Front End Challenge
-==========================================================
-
-<b>Goal:</b> Create a front-end GUI that connects to your previously made back end restful API
-
-<b>Step1:</b> Create a new Yii2 project using composer
------------------------------------------------------
-
-<b>Step2 (optional):</b> Install the guzzle
--------------------------------------------
-for instructions and docs go here
-http://docs.guzzlephp.org/en/stable/
-
-Alternatively, you can use CURL or something similar to make calls to your back-end API
+**NOTES:**
+- Yii won't create the database for you, this has to be done manually before you can access it.
+- Check and edit the other files in the `config/` directory to customize your application as required.
+- Refer to the README in the `tests` directory for information specific to basic application tests.
 
 
-<b>Step3:</b> Create a model that uses guzzle or CURL to make calls to the back-end restful API
-------------------------------------------------------------------------------------------------
-<b>Hint:</b> create a base model that does CRUD and extend your model from that
-if you use yii2 guzzle extention it would look similar to this
-```php
-<?php
-namespace app\models;
+TESTING
+-------
 
-use yii;
-use yii\base\Model;
-use GuzzleHttp\Client;
-use GuzzleHttp\Psr7;
-use GuzzleHttp\Exception\RequestException;
-use yii\data\ArrayDataProvider;
+Tests are located in `tests` directory. They are developed with [Codeception PHP Testing Framework](http://codeception.com/).
+By default there are 3 test suites:
 
-class APIModel extends Model
-{
-    public $baseUrl = 'http://localhost:8080';
-    Public $uri;
+- `unit`
+- `functional`
+- `acceptance`
 
-    public function getAuthKey(){
-        // Establish Session and Authkey Access
-        $session = Yii::$app->session;
-        // check if a session is already open
-        if (!$session->isActive){
-            $session->open();
-        }
+Tests can be executed by running
 
-        return $session['auth_key'];
-    }
-
-    public function save(){
-        // Create Guzzle Client
-        $client = new Client([
-            // Base URI is used with relative requests
-            'base_uri' => $this->baseUrl,
-        ]);
-
-        if($this->validate())
-        {
-            $authKey= $this->getAuthKey();
-            // Attempt API Transmission
-            try {
-                $headers=[
-                    'auth' => [$authKey, 'null'],
-                    'headers'  => ['content-type' => 'application/json', 'Accept' => 'application/json','connection'=>'close',],
-                    'json' => $this,
-                ];
-
-                $reBody=[
-                    'json' => $this
-                ];
-                $response = $client->request('POST', $this->uri,$headers,$reBody);
-                $body = $response->getBody();
-                return $body;
-            }
-            catch (RequestException $e) {
-                //echo "Exception...";
-                //print_r($stream->getContents());
-                //print_r($body);
-                //echo Psr7\str($e->getRequest());
-                if ($e->hasResponse()) {
-                    $response = (string)$e->getResponse()->getBody();
-                    //$stream = Psr7\str($response);
-                    //var_dump($response);
-                    $arrResponse = json_decode($response);
-                    foreach($arrResponse as $idx => $errorData)
-                    {
-                        $this->addError($errorData->field,$errorData->message);
-                    }
-
-                }
-
-            }
-
-        }
-
-    }
-
-    public function getAllModels($pageSize=10){
-
-        $client = new Client([
-            // Base URI is used with relative requests
-            'base_uri' => $this->baseUrl,
-        ]);
-        $authKey= $this->getAuthKey();
-        //remove the try catch to view the actual error
-        try {
-            $headers=[
-                'auth' => [$authKey, 'null'],
-                'headers'  => ['connection'=>'close',],
-            ];
-            $body='';
-            $response = $client->request('GET',  $this->uri,$headers, $body);
-            $body = $response->getBody();
-            $myBody=\GuzzleHttp\json_decode($body,true);
-
-        } catch (RequestException $e)
-        {
-            $myBody= Psr7\str($e->getRequest());
-            if ($e->hasResponse()) {
-                $myBody= Psr7\str($e->getResponse());
-            }
-            $myBody= "code: '".$e->getCode()."'' request: '".$myBody."'";
-        }
-
-        if(is_array ($myBody)) {
-            $dataProvider = new ArrayDataProvider([
-                'allModels' => $myBody,
-                'sort' => [
-                    'attributes' => ['id', 'username', 'employee_id'],
-                ],
-                'pagination' => [
-                    'pageSize' => $pageSize,
-                ],
-            ]);
-        }else{
-            $dataProvider=null;
-        }
-
-        return $dataProvider;
-    }
-
-    public function Search($query){
-
-        $client = new Client([
-            // Base URI is used with relative requests
-            'base_uri' => $this->baseUrl,
-        ]);
-        $authKey= $this->getAuthKey();
-        //remove the try catch to view the actual error
-        try {
-            $headers=[
-                'auth' => [$authKey, 'null'],
-                'headers'  => ['connection'=>'close',],
-                'query' => $query,
-            ];
-            $body='';
-            $response = $client->request('GET',  $this->uri,$headers, $body);
-            $body = $response->getBody();
-            $myBody=\GuzzleHttp\json_decode($body,true);
-
-        } catch (RequestException $e)
-        {
-            $myBody= Psr7\str($e->getRequest());
-            if ($e->hasResponse()) {
-                $myBody= Psr7\str($e->getResponse());
-            }
-            $myBody= "code: '".$e->getCode()."'' request: '".$myBody."'";
-        }
-
-        //this was test data
-        //$searchModel = new UserQuery();
-        //$dataProvider = $searchModel->search(Yii::$app->request->queryParams, $this->_owner);
-        if(is_array ($myBody)) {
-            $dataProvider = new ArrayDataProvider([
-                'allModels' => $myBody,
-                'sort' => [
-                    'attributes' => ['id', 'username', 'employee_id'],
-                ],
-                'pagination' => [
-                    'pageSize' => $pageSize,
-                ],
-            ]);
-        }else{
-            $dataProvider=null;
-        }
-
-        return $dataProvider;
-    }
-
-    public function getByID($id){
-
-        $client = new Client([
-            // Base URI is used with relative requests
-            'base_uri' => $this->baseUrl,
-        ]);
-        $authKey= $this->getAuthKey();
-        $headers=[
-            'auth' => [$authKey, 'null'],
-            'headers'  => ['connection'=>'close',],
-        ];
-        $body='';
-        $response = $client->request('GET', $this->uri.'/'.$id,$headers, $body);
-        $body = $response->getBody();
-        $body=\GuzzleHttp\json_decode($body,true);
-
-        return $body;
-    }
-
-    public function update($id){
-
-        // Create Guzzle Client
-        $client = new Client([
-            // Base URI is used with relative requests
-            'base_uri' => $this->baseUrl,
-        ]);
-
-        if($this->validate())
-        {
-            $authKey= $this->getAuthKey();
-            // Attempt API Transmission
-            try {
-                $headers=[
-                    'auth' => [$authKey, 'null'],
-                    'headers'  => ['content-type' => 'application/json', 'Accept' => 'application/json','connection'=>'close',],
-                    'json' => $this
-                ];
-
-                $reBody=[
-                    'json' => $this
-                ];
-                $response = $client->request('PUT', $this->uri.'/'.$id,$headers,$reBody);
-                $body = $response->getBody();
-                return $body;
-            }
-            catch (RequestException $e) {
-                //echo "Exception...";
-                //print_r($stream->getContents());
-                //print_r($body);
-                //echo Psr7\str($e->getRequest());
-                if ($e->hasResponse()) {
-                    $response = (string)$e->getResponse()->getBody();
-                    //$stream = Psr7\str($response);
-                    //var_dump($response);
-                    $arrResponse = json_decode($response);
-                    foreach($arrResponse as $idx => $errorData)
-                    {
-                        $this->addError($errorData->field,$errorData->message);
-                    }
-
-                }
-
-            }
-
-        }
-
-    }
-
-}
+```
+vendor/bin/codecept run
 ```
 
-<b>Step4:</b> create a Yii2 Active Form to create a new user in the database
-----------------------------------------------------------------------------
+The command above will execute unit and functional tests. Unit tests are testing the system components, while functional
+tests are for testing user interaction. Acceptance tests are disabled by default as they require additional setup since
+they perform testing in real browser. 
 
-Check out the following
-http://www.yiiframework.com/doc-2.0/guide-input-forms.html
 
-Stretch Challenge
-===============================
+### Running  acceptance tests
 
-<b>Goal:</b>  Create a login page that after you log in displays all the users for the app
+To execute acceptance tests do the following:  
 
-<b>Step1:</b> Configure the back-end API to use BASIC Auth credentials
-----------------------------------------------------------------------
+1. Rename `tests/acceptance.suite.yml.example` to `tests/acceptance.suite.yml` to enable suite configuration
 
-<b>Step2:</b> make a user login form on the front-end app that authenticates the user to the back-end API using basic auth
-----------------------------------------------------------------------------------------------------------------------------
+2. Replace `codeception/base` package in `composer.json` with `codeception/codeception` to install full featured
+   version of Codeception
 
-<b>Step3:</b> After Authentication display a page that lists all users in the app using a yii2 grid view  
----------------------------------------------------------------------------------------------------------
+3. Update dependencies with Composer 
 
-Submission Instructions
-============================
+    ```
+    composer update  
+    ```
 
-Create a new repo on GitHub for both front-end and back end applications. Push your code and send a link to the repo to Development@opstel.com
+4. Download [Selenium Server](http://www.seleniumhq.org/download/) and launch it:
+
+    ```
+    java -jar ~/selenium-server-standalone-x.xx.x.jar
+    ```
+
+    In case of using Selenium Server 3.0 with Firefox browser since v48 or Google Chrome since v53 you must download [GeckoDriver](https://github.com/mozilla/geckodriver/releases) or [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/downloads) and launch Selenium with it:
+
+    ```
+    # for Firefox
+    java -jar -Dwebdriver.gecko.driver=~/geckodriver ~/selenium-server-standalone-3.xx.x.jar
+    
+    # for Google Chrome
+    java -jar -Dwebdriver.chrome.driver=~/chromedriver ~/selenium-server-standalone-3.xx.x.jar
+    ``` 
+    
+    As an alternative way you can use already configured Docker container with older versions of Selenium and Firefox:
+    
+    ```
+    docker run --net=host selenium/standalone-firefox:2.53.0
+    ```
+
+5. (Optional) Create `yii2_basic_tests` database and update it by applying migrations if you have them.
+
+   ```
+   tests/bin/yii migrate
+   ```
+
+   The database configuration can be found at `config/test_db.php`.
+
+
+6. Start web server:
+
+    ```
+    tests/bin/yii serve
+    ```
+
+7. Now you can run all available tests
+
+   ```
+   # run all available tests
+   vendor/bin/codecept run
+
+   # run acceptance tests
+   vendor/bin/codecept run acceptance
+
+   # run only unit and functional tests
+   vendor/bin/codecept run unit,functional
+   ```
+
+### Code coverage support
+
+By default, code coverage is disabled in `codeception.yml` configuration file, you should uncomment needed rows to be able
+to collect code coverage. You can run your tests and collect coverage with the following command:
+
+```
+#collect coverage for all tests
+vendor/bin/codecept run -- --coverage-html --coverage-xml
+
+#collect coverage only for unit tests
+vendor/bin/codecept run unit -- --coverage-html --coverage-xml
+
+#collect coverage for unit and functional tests
+vendor/bin/codecept run functional,unit -- --coverage-html --coverage-xml
+```
+
+You can see code coverage output under the `tests/_output` directory.
